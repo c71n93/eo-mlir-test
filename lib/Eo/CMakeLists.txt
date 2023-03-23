@@ -1,4 +1,4 @@
-add_mlir_dialect_library(MLIRHello
+add_mlir_dialect_library(MLIREo
         EoDialect.cpp
         EoOps.cpp
 

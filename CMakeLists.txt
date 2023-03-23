@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 3.13.4)
+
+# CMP0116: Ninja generators transform `DEPFILE`s from `add_custom_command()`
+# New in CMake 3.20. https://cmake.org/cmake/help/latest/policy/CMP0116.html
+if(POLICY CMP0116)
+    cmake_policy(SET CMP0116 OLD)
+endif()
+
 project(eo-mlir-test LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
@@ -20,13 +27,13 @@ include(AddLLVM)
 include(AddMLIR)
 include(HandleLLVMOptions)
 
-# ???
-#include_directories(${LLVM_INCLUDE_DIRS})
-#include_directories(${MLIR_INCLUDE_DIRS})
-#include_directories(${PROJECT_SOURCE_DIR}/include)
-#include_directories(${PROJECT_BINARY_DIR}/include)
-#link_directories(${LLVM_BUILD_LIBRARY_DIR})
-#add_definitions(${LLVM_DEFINITIONS})
+# LLVM include directories
+include_directories(${LLVM_INCLUDE_DIRS})
+include_directories(${MLIR_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_BINARY_DIR}/include)
+link_directories(${LLVM_BUILD_LIBRARY_DIR})
+add_definitions(${LLVM_DEFINITIONS})
 
 add_subdirectory(include)
 add_subdirectory(lib)

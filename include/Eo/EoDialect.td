@@ -24,6 +24,6 @@ def EO_Dialect : Dialect {
  */
 
 class EO_Op<string mnemonic, list<Trait> traits = []> :
-        Op<Hello_Dialect, mnemonic, traits>;
+        Op<EO_Dialect, mnemonic, traits>;
 
 #endif // EO_DIALECT
