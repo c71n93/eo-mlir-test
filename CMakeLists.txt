@@ -37,5 +37,3 @@ add_definitions(${LLVM_DEFINITIONS})
 
 add_subdirectory(include)
 add_subdirectory(lib)
-
-#add_executable(Eo-mlir-test main.cpp)

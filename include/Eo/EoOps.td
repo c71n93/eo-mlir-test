@@ -4,6 +4,7 @@
 include "EoDialect.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 
+// TODO: Is this Operation is Pure(with no side effects)?
 def PrintOp : EO_Op<"print", [Pure]> {
     let summary = "print operation";
     let description = [{
