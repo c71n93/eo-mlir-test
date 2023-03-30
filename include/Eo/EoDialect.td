@@ -8,12 +8,12 @@ include "mlir/IR/OpBase.td"
  */
 
 def EO_Dialect : Dialect {
-let name = "EO";
-let summary = "A Eo out-of-tree MLIR dialect.";
-let description = [{
-This is a dialect to test how MLIR can be integraited into EO
-}];
-let cppNamespace = "::Eo";
+    let name = "EO";
+    let summary = "A Eo out-of-tree MLIR dialect.";
+    let description = [{
+        This is a dialect to test how MLIR can be integraited into EO
+    }];
+    let cppNamespace = "::Eo";
 }
 
 /**
@@ -21,6 +21,6 @@ let cppNamespace = "::Eo";
  */
 
 class EO_Op<string mnemonic, list<Trait> traits = []> :
-Op<EO_Dialect, mnemonic, traits>;
+    Op<EO_Dialect, mnemonic, traits>;
 
 #endif //EO_DIALECT
