@@ -71,7 +71,7 @@ and also provides additional tools on top (such as documentation generation). Mo
     Converts to ???
 
 ##### 2. Object definition = creating a new type
-- Case 1: Object copying:
+- Case 1: Object copying (current problem)
     ```
     [] > numbers
       1 > one
