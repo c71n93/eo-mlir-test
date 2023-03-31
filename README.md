@@ -70,7 +70,7 @@ and also provides additional tools on top (such as documentation generation). Mo
     ```
     Converts to ???
 
-##### 1. Object definition = creating a new type
+##### 2. Object definition = creating a new type
 - Case 1: Object copying:
     ```
     [] > numbers
