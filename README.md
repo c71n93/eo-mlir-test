@@ -12,7 +12,7 @@ There are two ways how to do it:**
 to generate parser. Then easily traverse this AST and generate MLIR.
 2. Use ready-made `xmir` files to travers them and generate MLIR.
 
-*We need to decide which is more correct to use*
+*We need to decide which approach is more correct to use*
 
 ### 2. Design high-level EO dialect for MLIR
 MLIR provides a powerful declaratively specification mechanism via TableGen; a generic language with tooling to maintain 
