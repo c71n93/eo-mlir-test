@@ -35,7 +35,6 @@ to make a custom operation, called, for example `abstraction`.
 
 - Case 1: Object that just decorates another object
 
-  Example on EO:
     ```
     [a b] > sum
       a.plus b > @
@@ -152,6 +151,105 @@ in EO as static types.
     numbers.one > one
     ```
     *It is impossible to pass arguments to static type*
+
+##### 3. High level operations (version 1)
+The idea is to implement dialect as close to original EO program as possible. And also make it possible to lower some
+necessary operations to other dialects. Let's see how it works on some examples.
+
+- Case 1: Object that just decorates another object
+  
+  ```
+  [a b] > sum
+    a.plus b > @
+  
+  [] > app
+    sum 1 2 > @
+  ```
+  Converts to:
+  ```
+  eo.abstraction @sum(%a: !eo.obj, %b: !eo.obj) : (!eo.obj, !eo.obj) -> !eo.obj {
+      // create empty object
+      %sum = eo.create_empty_obj() : () -> !eo.obj
+      
+      // [a b]
+      %sum1 = eo.add_attr(%sum, %a) {attr = "a"} : (!eo.obj, !eo.obj) -> !eo.obj
+      %sum2 = eo.add_attr(%sum1, %b) {attr = "b"} : (!eo.obj, !eo.obj) -> !eo.obj
+      
+      // a.plus b > @
+      %a_plus = eo.dot_notation(%a) {attr = "plus"} : (!eo.obj) -> (!eo.obj)
+      %a_plus_b = eo.application(%a_plus, [%b]) : (!eo.obj, !eo.obj[]) -> !eo.obj
+      %sum3 = eo.add_attr(%sum2, %a_plus_b) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
+  
+      return %sum3
+  }
+  
+  eo.abstraction @app() : () -> !eo.obj {
+      // create empty object
+      %app = eo.create_empty_obj() : () -> !eo.obj
+  
+      // sum(1 2).first > @
+      %sum_abstr = eo.get_obj() {obj = @sum} : ((!eo.obj, !eo.obj) -> !eo.obj) -> !eo.obj
+      %1 = eo.get_obj() {obj = 1} :i64 -> !eo.obj
+      %2 = eo.get_obj() {obj = 2} :i64 -> !eo.obj
+      %sum_obj = %a_plus_b = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
+      %app1 = eo.add_attr(%app, %sum_obj) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
+      
+      return %app1
+  }
+  ```
+  *Here `!eo.obj` custom type that is map of object attributes(which are objects in themselves) and their names.*
+- Case 2: Object that has some attributes
+
+  ```
+  [a b] > sum
+    a.plus b > @
+    a > first
+    b > second
+  
+  [] > app
+    first. > @
+      sum 1 2
+  ```
+  Converts to:
+
+  ```
+  eo.abstraction @sum(%a: !eo.obj, %b: !eo.obj) : (!eo.obj, !eo.obj) -> !eo.obj {
+      // create empty object
+      %sum = eo.create_empty_obj() : () -> !eo.obj
+      
+      // [a b]
+      %sum1 = eo.add_attr(%sum, %a) {attr = "a"} : (!eo.obj, !eo.obj) -> !eo.obj
+      %sum2 = eo.add_attr(%sum1, %b) {attr = "b"} : (!eo.obj, !eo.obj) -> !eo.obj
+      
+      // a.plus b > @
+      %a_plus = eo.dot_notation(%a) {attr = "plus"} : (!eo.obj) -> (!eo.obj)
+      %a_plus_b = eo.application(%a_plus, [%b]) : (!eo.obj, !eo.obj[])
+      %sum3 = eo.add_attr(%sum2, %a_plus_b) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
+  
+      // a > first
+      %sum4 = eo.add_attr(%sum3, %a) {attr = "first"} : (!eo.obj, !eo.obj) -> !eo.obj
+  
+      // b > second
+      %sum5 = eo.add_attr(%sum4, %b) {attr = "second"} : (!eo.obj, !eo.obj) -> !eo.obj
+  
+      return %sum5
+  }
+  
+  eo.abstraction @app() : () -> !eo.obj {
+      // create empty object
+      %app = eo.create_empty_obj() : () -> !eo.obj
+  
+      // sum(1 2).first > @
+      %sum_abstr = eo.get_obj() {obj = @sum} : ((!eo.obj, !eo.obj) -> !eo.obj) -> !eo.obj
+      %1 = eo.get_obj() {obj = 1} :i64 -> !eo.obj
+      %2 = eo.get_obj() {obj = 2} :i64 -> !eo.obj
+      %sum_obj = %a_plus_b = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
+      %app1 = eo.add_attr(%app, %sum_first) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
+      
+      return %app1
+  }
+  ```
+
 
 ### 3. Implement conversion from EO AST to MLIR EO dialect
 Using [Builder](https://mlir.llvm.org/doxygen/classmlir_1_1Builder.html) class implement `EoMLIRGen` class, that will
