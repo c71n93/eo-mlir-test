@@ -189,9 +189,9 @@ necessary operations to other dialects. Let's see how it works on some examples.
   
       // sum(1 2).first > @
       %sum_abstr = eo.get_obj() {obj = @sum} : ((!eo.obj, !eo.obj) -> !eo.obj) -> !eo.obj
-      %1 = eo.get_obj() {obj = 1} :i64 -> !eo.obj
-      %2 = eo.get_obj() {obj = 2} :i64 -> !eo.obj
-      %sum_obj = %a_plus_b = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
+      %1 = eo.get_obj() {obj = 1} : i64 -> !eo.obj
+      %2 = eo.get_obj() {obj = 2} : i64 -> !eo.obj
+      %sum_obj = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
       %app1 = eo.add_attr(%app, %sum_obj) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
       
       return %app1
@@ -241,9 +241,9 @@ necessary operations to other dialects. Let's see how it works on some examples.
   
       // sum(1 2).first > @
       %sum_abstr = eo.get_obj() {obj = @sum} : ((!eo.obj, !eo.obj) -> !eo.obj) -> !eo.obj
-      %1 = eo.get_obj() {obj = 1} :i64 -> !eo.obj
-      %2 = eo.get_obj() {obj = 2} :i64 -> !eo.obj
-      %sum_obj = %a_plus_b = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
+      %1 = eo.get_obj() {obj = 1} : i64 -> !eo.obj
+      %2 = eo.get_obj() {obj = 2} : i64 -> !eo.obj
+      %sum_obj = eo.application(%sum_abstr, [%1, %2]) : (!eo.obj, !eo.obj[]) -> !eo.obj
       %app1 = eo.add_attr(%app, %sum_first) {attr = "phi"} : (!eo.obj, !eo.obj) -> !eo.obj
       
       return %app1
