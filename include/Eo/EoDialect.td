@@ -7,12 +7,12 @@ include "mlir/IR/OpBase.td"
  * Definition of EO dialect
  */
 def EO_Dialect : Dialect {
-    let name = "EO";
+    let name = "eo";
     let summary = "A Eo out-of-tree MLIR dialect.";
     let description = [{
         This is a dialect to test how MLIR can be integraited into EO
     }];
-    let cppNamespace = "::Eo";
+    let cppNamespace = "::eo";
 }
 
 /**
