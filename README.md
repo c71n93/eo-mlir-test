@@ -123,36 +123,7 @@ out how to make it better*
     ```
   *What should function return?*
 
-##### 2. Object definition = creating a new type
-This solution is most likely impossible to implement for EO. Since it is not yet known how objects can be represented 
-in EO as static types.
-- Case 1: Object copying (current problem)
-
-    ```
-    [] > numbers
-      1 > one
-      2 > two
-    
-    numbers > numbers_copy
-    numbers.one > one
-    ```
-    Converts to:
-    ```
-    %0 = eo.copy(???) : (!eo.object<i64, i64>) -> i64 // what to copy here?
-    %1 = eo.dot_notation %0[0] (!eo.object<i64, i64>) -> i64 // 
-    %2 = eo.copy(%1) : (i64) -> i64 
-    ```
-- Case 2: Free attributes (current problem)
-    ```
-    [a b] > sum
-      a.plus b > @
-    
-    numbers > numbers_copy
-    numbers.one > one
-    ```
-    *It is impossible to pass arguments to static type*
-
-##### 3. High level operations (version 1)
+##### 2. High level operations (version 1)
 The idea is to implement dialect as close to original EO program as possible. And also make it possible to lower some
 necessary operations to other dialects. Let's see how it works on some examples.
 
@@ -249,6 +220,7 @@ necessary operations to other dialects. Let's see how it works on some examples.
       return %app1
   }
   ```
+
 
 
 ### 3. Implement conversion from EO AST to MLIR EO dialect
