@@ -9,7 +9,7 @@ include "mlir/Interfaces/SideEffectInterfaces.td"
  * as it is a pure operation (don't have side effects) and may be removed if
  * dead.
  */
-def ConstantOp : EO_Op<"const", [/*ConstantLike,*/ Pure]> {
+def ConstantOp : Eo_Op<"const", [/*ConstantLike,*/ Pure]> {
     /** `summary` and `description` provides documentation for dialect */
     let summary = "Defines a EO constant";
     let description = [{
@@ -31,7 +31,7 @@ def ConstantOp : EO_Op<"const", [/*ConstantLike,*/ Pure]> {
 /**
  * Defining a ConstantOp operation.
  */
-def PrintOp : EO_Op<"print"> {
+def PrintOp : Eo_Op<"print"> {
     /** `summary` and `description` provides documentation for dialect */
     let summary = "print operation";
     let description = [{

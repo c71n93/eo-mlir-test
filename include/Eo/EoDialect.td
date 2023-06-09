@@ -6,7 +6,7 @@ include "mlir/IR/OpBase.td"
 /**
  * Definition of EO dialect
  */
-def EO_Dialect : Dialect {
+def Eo_Dialect : Dialect {
     let name = "eo";
     let summary = "A Eo out-of-tree MLIR dialect.";
     let description = [{
@@ -18,7 +18,7 @@ def EO_Dialect : Dialect {
 /**
  * Definition of base EO operation
  */
-class EO_Op<string mnemonic, list<Trait> traits = []> :
-    Op<EO_Dialect, mnemonic, traits>;
+class Eo_Op<string mnemonic, list<Trait> traits = []> :
+    Op<Eo_Dialect, mnemonic, traits>;
 
 #endif //EO_DIALECT
