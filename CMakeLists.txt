@@ -10,6 +10,11 @@ project(eo-mlir-test LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
 
+# Adding PugiXML to the project
+set(PUGI_XML_ROOT third-party/pugixml-1.13)
+add_subdirectory(${PUGI_XML_ROOT})
+include_directories(${PUGI_XML_ROOT}/src)
+
 # Imports information from the installed MLIR and calls find_package(LLVM ..)
 find_package(MLIR REQUIRED CONFIG)
 
@@ -37,3 +42,4 @@ add_definitions(${LLVM_DEFINITIONS})
 
 add_subdirectory(include)
 add_subdirectory(lib)
+add_subdirectory(eo-opt)
