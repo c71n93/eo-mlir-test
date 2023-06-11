@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program ms="150"
+          name="sandbox.app"
+          source="/Users/c71n93/Programming/EOLANG/sandbox/eo/sandbox/app.eo"
+          time="2023-06-11T11:49:19.390045Z"
+          version="0.29.1">
+   <listing>+package sandbox
+
+[args...] &gt; app
+  if. &gt; @
+    1.lt 2
+    TRUE
+    FALSE
+</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta line="1">
+         <head>package</head>
+         <tail>sandbox</tail>
+         <part>sandbox</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" line="3" name="app" pos="0">
+         <o line="3" name="args" pos="1" vararg=""/>
+         <o base=".if" line="4" name="@" pos="2">
+            <o base="int" data="bytes" line="5" pos="4">00 00 00 00 00 00 00 01</o>
+            <o base=".lt" line="5" method="" pos="5">
+               <o base="int" data="bytes" line="5" pos="9">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o base="bool" data="bytes" line="6" pos="4">01</o>
+            <o base="bool" data="bytes" line="7" pos="4">00</o>
+         </o>
+      </o>
+   </objects>
+</program>
