@@ -13,12 +13,28 @@ static cl::opt<std::string> inputFilePath(cl::Positional,
                                           cl::desc("<input file path>"),
                                           cl::init("-"),
                                           cl::value_desc("input file path"));
-void traverseObjects(pugi::xml_node objects) {
 
+void traverseObjectsRecursive(pugi::xml_node objects) {
+    static int nCalls = 0;
+    nCalls++;
+    for (int i = 1; i < nCalls; i++) {
+        llvm::outs() << "  ";
+    }
     for (auto obj: objects.children()) {
-        llvm::outs() << obj.attribute("name").value() << "\n";
-        for (auto sub_obj: obj.children()) {
-            llvm::outs() << "\t" << sub_obj.attribute("name").value() << "\n";
+        if (!obj.attribute("name").empty()) {
+            llvm::outs() << obj.attribute("name").value() << " ";
+        }
+        else {
+            llvm::outs() << obj.attribute("base").value() << " ";
+        }
+
+        if(!obj.child("o").empty()) {
+            llvm::outs() << "\n";
+            traverseObjectsRecursive(obj);
+            llvm::outs() << "\n";
+            for (int i = 1; i < nCalls; i++) {
+                llvm::outs() << "  ";
+            }
         }
     }
 }
@@ -31,7 +47,7 @@ int main(int argc, char* argv[]) {
     if (!res)
         llvm::errs() << "Can't load XML file. " << res.description() << ".\n";
 
-    traverseObjects(doc.child("program").child("objects"));
+    traverseObjectsRecursive(doc.child("program").child("objects"));
 
     return 0;
 }
